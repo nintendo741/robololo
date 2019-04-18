@@ -1,5 +1,12 @@
 import msvcrt, sys
 import Bot.Integrations.MovingPlantform as MP
+import Utils.DBConnector as DB
+import Tests.CheckDevices as CD
+import time
+import config as CF
+
+DB.DBConnect()
+
 Speed=int(input('enter speed'))
 Turn=int(input('enter turn(1/1000)'))
 while True:

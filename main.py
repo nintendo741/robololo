@@ -29,6 +29,7 @@ ActionsTime = [CF.TimeStartMov, CF.TimeActivateExperiment, CF.TimeCollectAtoms, 
 #===============================================================================
 DB.DBConnect()
 StartTime = float(DB.TimeCheck())
+
 #print(StartTime)
 while (not 1):
     time.sleep(0.1)

@@ -6,3 +6,5 @@ TimeDropOnFields = 10
 
 MovingArduinoId = '756303134363511072A0'
 SortedArduinoId = 'usb-1a86_USB2.0-Serial'
+MovingArduino='MovingArduino'
+SortedArduino='SortedArduino'

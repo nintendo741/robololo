@@ -1,6 +1,5 @@
 import Utils.QueryUtils as QU
 import time
-
 MovingArduinoPath = 0
 
 #опрос железа
