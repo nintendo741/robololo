@@ -1,8 +1,8 @@
 #check ACM
 import subprocess
-import serial
-import config as CF
-import Utils.DBConnector as DB
+#import serial
+#import config as CF
+#import Utils.DBConnector as DB
 
 # 756303134363511072A0 - full Arduino Serial Number
 # 75630

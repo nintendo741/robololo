@@ -1,6 +1,7 @@
 import sqlite3
 import sys
-import Utils.TimeChecker as TC
+#import Utils.TimeChecker as TC
+from Utils import TimeChecker as TC
 
 def QueryWrite(que, com):
   if (que == 'query') or (que == 'queryArduino'):

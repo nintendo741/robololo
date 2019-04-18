@@ -1,8 +1,11 @@
 import sys
 import config as CF
-import Utils.DBConnector as DB
-import Utils.QueryUtils as QU
-import Utils.TimeChecker as TC
+#import Utils.DBConnector as DB
+from Utils import DBConnector as DB
+#import Utils.QueryUtils as QU
+from Utils import QueryUtils as QU
+#import Utils.TimeChecker as TC
+from Utils import TimeChecker as TC
 import time
 
 # F = open("time.txt", "r+")
@@ -23,7 +26,6 @@ import time
 #     print(t)
 #   finally:
 #     F.close()
-
 Actions = ["Start moving", "Activate experiment", "Atom collect", "Drop on libra", "Drop on field"]
 ActionsTime = [CF.TimeStartMov, CF.TimeActivateExperiment, CF.TimeCollectAtoms, CF.TimeDropOnLibra, CF.TimeDropOnFields]
 #===============================================================================

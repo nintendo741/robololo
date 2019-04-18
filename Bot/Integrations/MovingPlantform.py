@@ -1,5 +1,7 @@
-import Bot.Integrations.SendingComand as SC
-import Utils.DBConnector as DB
+#import Bot.Integrations.SendingComand as SC
+#import Utils.DBConnector as DB
+from Bot.Integrations import SendingComand as SC
+from Utils import DBConnector as DB
 
 MovingArduino = DB.DevicePath("MovingArduino")
 

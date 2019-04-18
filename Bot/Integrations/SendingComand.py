@@ -1,6 +1,7 @@
 import subprocess
 import serial
-import Utils.DBConnector as DB
+#import Utils.DBConnector as DB
+from Utils import DBConnector as DB
 import time
 
 serMov = serial.Serial(DB.DevicePath("MovingArduino"), 9600, timeout=None)

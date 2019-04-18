@@ -1,7 +1,9 @@
-import Utils.QueryUtils as QU
+#import Utils.QueryUtils as QU
+#import Utils.DBConnector as DB
+from Utils import QueryUtils as QU
+from Utils import DBConnector as DB
 import time
 MovingArduinoPath = 0
-
 #опрос железа
 #порты TTY, где Ардуино
 #ACM на все порты
