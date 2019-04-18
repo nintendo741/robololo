@@ -34,19 +34,19 @@ StartTime = float(DB.TimeCheck())
 
 #print(StartTime)
 while (not 1):
-    time.sleep(0.1)
+	time.sleep(0.1)
 QU.QueryFill()
 
 for i in range(len(Actions)):
-  print(i)
-  print(StartTime)
-  while(not (QU.DoneCheck('query', Actions[i])) and ((TC.Time()-StartTime) <= ActionsTime[i])):
-    print(TC.Time()-StartTime)
-    print(QU.QueryMinId('query'))
-    print()
-    time.sleep(0.1)
-  QU.QueryToLog('query', Actions[i])
-  QU.QueryDelete('query', Actions[i])
+	print(i)
+	print(StartTime)
+	while(not (QU.DoneCheck('query', Actions[i])) and ((TC.Time()-StartTime) <= ActionsTime[i])):
+		print(TC.Time()-StartTime)
+		print(QU.QueryMinId('query'))
+		print()
+		time.sleep(0.1)
+	QU.QueryToLog('query', Actions[i])
+	QU.QueryDelete('query', Actions[i])
 print("FINISH")
 # запуск первой фазы старта 
 #while (not QU.DoneChek("") or TC.TimeCheck()<CF.TimeStartMov ):

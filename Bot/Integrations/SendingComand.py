@@ -10,8 +10,8 @@ serSort = serial.Serial(DB.DevicePath("SortedArduino"), 9600, timeout=None)
 time.sleep(2)
 
 def SendComand(Comand, Ard):
-    if Ard=="Moving":
-        serMov.write(Comand)
-    elif Ard=="Sorted":
-        serSort.write(Comand)
-    #subprocess.check_output('echo '+Comand+' > '+PathToDevice, shell=True)
+	if Ard=="Moving":
+		serMov.write(Comand)
+	elif Ard=="Sorted":
+		serSort.write(Comand)
+	#subprocess.check_output('echo '+Comand+' > '+PathToDevice, shell=True)
