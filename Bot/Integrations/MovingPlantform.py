@@ -3,8 +3,8 @@
 from Bot.Integrations import SendingComand as SC
 from Utils import DBConnector as DB
 
-MovingArduino = DB.DevicePath("MovingArduino")
-
+#MovingArduino = DB.DevicePath("MovingArduino")
+MovingArduino = "Moving"
 def BuildMovingComand(Speed, Turn, Direction):
 
 	if Speed<0: # проверка значений скорости и оборотов
@@ -45,55 +45,56 @@ def BuildMovingComand_2(Speed, Turn, Direction):
 			comand+='|'+'0'
 		else:
 			comand+='|'+Turn
+	comand+="@"
 	return comand
 
 def ForwardMoving(Speed, Turn):  #принимаем скорость и обороты колеса
 	Direction=['1','1','1','1']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def BackMoving(Speed,Turn):
 
 	Direction=['0','0','0','0']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def LeftMoving(Speed,Turn):
 	Direction=['0','1','1','0']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def RightMoving(Speed,Turn):
 	Direction=['1','0','0','1']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def TurnLeftMoving(Speed,Turn):
 	Direction=['0','1','0','1']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def TurnRightMoving(Speed,Turn):
 	Direction=['1','0','1','0']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def ForwardLeftMoving(Speed,Turn):
 	Direction=['2','1','1','2']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def ForwardRightMoving(Speed,Turn):
 	Direction=['1','2','2','1']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def BackLeftMoving(Speed,Turn):
 	Direction=['0','2','2','0']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)
 
 def BackRightMoving(Speed,Turn):
 	Direction=['2','0','0','2']
 	comand=BuildMovingComand(Speed,Turn,Direction)
-	SC.SendComand(comand, MovingArduino)
+	SC.SendComand(comand.encode(), MovingArduino)

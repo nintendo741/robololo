@@ -2,7 +2,7 @@ import sys
 from Utils import DBConnector as DB
 DB.DBConnect()
 from Bot.Integrations import MovingPlantform as MP
-
+from Bot.Integrations import SendingComand as SC
 #import Tests.CheckDevices as CD
 #import time
 #import config as CF
@@ -35,6 +35,7 @@ elif sys.platform[:3] == 'lin':
 Speed=int(input('enter speed'))
 Turn=int(input('enter turn(1/1000)'))
 while True:
+  print(SC.ReadComand('Moving'))
   pressedKey = getkey().decode("utf-8")
   if pressedKey == 'y':
     sys.exit()
