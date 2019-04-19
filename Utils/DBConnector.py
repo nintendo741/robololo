@@ -119,7 +119,7 @@ def DevicePath(device):
 		dbsess = conn.cursor()
 		st = next(dbsess.execute("""SELECT path FROM devices WHERE(device = '%s');"""%(device)))[0]
 		conn.commit()
-		return st[:-1]
+		return st
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
