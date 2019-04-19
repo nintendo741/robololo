@@ -39,15 +39,19 @@ def TablesCreate():
                 (id INTEGER PRIMARY KEY NOT NULL,
                 device text NOT NULL,
                 path text NOT NULL);""")
+		print("pisos")
 		dbsess.execute("""INSERT INTO devices (device, path)
-                VALUES(MovingArduino, '%s');"""%(CD.DevicePath(CF.MovingArduinoId)))
+                VALUES('MovingArduino', '%s');"""%(CD.DevicePath(CF.MovingArduinoId)))
+		print("pisos2")
 		dbsess.execute("""INSERT INTO devices (device, path)
-                VALUES(SortedArduino, '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
-		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = MovingArduino)"""))[0]
+                VALUES('SortedArduino', '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
+		print("pisos3")
+		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'MovingArduino')"""))[0]
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
-		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = SortedArduino)"""))[0]
+		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
 		conn.commit()
+		print("pisos4")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -115,7 +119,7 @@ def DevicePath(device):
 		dbsess = conn.cursor()
 		st = next(dbsess.execute("""SELECT path FROM devices WHERE(device = '%s');"""%(device)))[0]
 		conn.commit()
-		return st
+		return st[:-1]
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()

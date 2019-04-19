@@ -11,7 +11,9 @@ import subprocess
 
 
 def DevicePath(id):
+	print(id)
 	port = subprocess.check_output("""ls -la /dev/serial/by-id/ | grep %s | awk '{print($11)}' | sed 's/..\/..\///g'"""%(id), shell=True)
-	path = "/dev/" + str(port)
+	path = "/dev/" + port[:-1].decode()
+	print(path)
 	return path
 
