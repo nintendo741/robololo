@@ -25,4 +25,5 @@ def ReadComand(Ard):
     return data
 def SendComand(Comand, Ard):
     Serials[Ard].write(Comand)
+    print(Comand)
 #subprocess.check_output('echo '+Comand+' > '+PathToDevice, shell=True)

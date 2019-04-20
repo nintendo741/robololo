@@ -26,6 +26,7 @@ def BuildMovingComand(Speed, Turn, Direction):
 		comand+='|'+Speed
 	for i in range (4):
 		comand+='|'+Turn
+	comand+='@'
 	return comand
 
 def BuildMovingComand_2(Speed, Turn, Direction):

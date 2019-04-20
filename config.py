@@ -4,7 +4,7 @@ TimeCollectAtoms = 6
 TimeDropOnLibra = 8
 TimeDropOnFields = 10
 
-MovingArduinoId = '756303134363511072A0'
-SortedArduinoId = 'usb-1a86_USB2.0-Serial'
+MovingArduinoId = 'usb-1a86_USB2.0-Serial'
+SortedArduinoId = '756303134363511072A0'
 MovingArduino='MovingArduino'
 SortedArduino='SortedArduino'
