@@ -7,7 +7,12 @@ from Utils import QueryUtils as QU
 #import Utils.TimeChecker as TC
 from Utils import TimeChecker as TC
 import time
+D = CF.Debug
 
+#from Bot.Integrations import SendingComand as SC
+#SM = SC.serMov
+#SS = SC.serSort
+#sys.exit()
 # F = open("time.txt", "r+")
 # F.write(str(TC.TimeStart()))
 # R=0
@@ -26,6 +31,7 @@ import time
 #     print(t)
 #   finally:
 #     F.close()
+
 Actions = ["Start moving", "Activate experiment", "Atom collect", "Drop on libra", "Drop on field"]
 ActionsTime = [CF.TimeStartMov, CF.TimeActivateExperiment, CF.TimeCollectAtoms, CF.TimeDropOnLibra, CF.TimeDropOnFields]
 #===============================================================================

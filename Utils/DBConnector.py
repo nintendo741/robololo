@@ -10,6 +10,7 @@ from Utils import TimeChecker as TC
 from Tests import CheckDevices as CD
 import config as CF
 TimeGame = 100
+D = CF.Debug
 #sys.exit()
 def TablesCreate():
 	try:
@@ -39,19 +40,17 @@ def TablesCreate():
                 (id INTEGER PRIMARY KEY NOT NULL,
                 device text NOT NULL,
                 path text NOT NULL);""")
-		print("pisos")
 		dbsess.execute("""INSERT INTO devices (device, path)
                 VALUES('MovingArduino', '%s');"""%(CD.DevicePath(CF.MovingArduinoId)))
-		print("pisos2")
 		dbsess.execute("""INSERT INTO devices (device, path)
                 VALUES('SortedArduino', '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
-		print("pisos3")
 		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'MovingArduino')"""))[0]
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
 		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
 		conn.commit()
-		print("pisos4")
+		if D > 0:
+			print("TableCreate")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -72,6 +71,8 @@ def Finish():
 		dbsess.execute("""DROP TABLE startTime;""")
 		dbsess.execute("""DROP TABLE devices;""")
 		conn.commit()
+		if D > 0:
+			print("Finish")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -87,6 +88,8 @@ def DBConnect():
 		dbsess = conn.cursor()
 		TablesCreate()
 		conn.commit()
+		if D > 0:
+			print("DBConnect")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -103,6 +106,8 @@ def TimeCheck():
 		st = next(dbsess.execute("""SELECT time FROM startTime;"""))[0]
 		#t = TC.Time() - st
 		conn.commit()
+		if D > 0:
+			print("TimeCheck:" + str(st))
 		return st
 	except sqlite3.Error as e:
 		if conn:
@@ -119,6 +124,8 @@ def DevicePath(device):
 		dbsess = conn.cursor()
 		st = next(dbsess.execute("""SELECT path FROM devices WHERE(device = '%s');"""%(device)))[0]
 		conn.commit()
+		if D > 0:
+			print("DevicePath" + str(device) + str(st))
 		return st
 	except sqlite3.Error as e:
 		if conn:

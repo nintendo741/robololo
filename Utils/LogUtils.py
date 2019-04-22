@@ -2,6 +2,7 @@ import sqlite3
 import sys
 #import Utils.TimeChecker as TC
 from Utils import TimeChecker as TC
+from config import Debug as D
 
 def LogWrite(txt):
 	try:
@@ -10,6 +11,8 @@ def LogWrite(txt):
 		qwe="""INSERT INTO log(time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), txt)
 		dbsess.execute(qwe)
 		conn.commit()
+		if D > 0:
+			print("LogWrite" + str(txt))
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -27,6 +30,8 @@ def LogSave():
 		dbsess.execute("""CREATE TABLE '%s' (id INTEGER PRIMARY KEY, time text NOT NULL, log text);""" %(name))
 		dbsess.execute("""INSERT INTO '%s' SELECT * FROM log;"""%(name))
 		conn.commit()
+		if D > 0:
+			print("LogSave")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()

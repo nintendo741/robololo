@@ -2,6 +2,7 @@ import sqlite3
 import sys
 #import Utils.TimeChecker as TC
 from Utils import TimeChecker as TC
+from config import Debug as D
 
 def QueryWrite(que, com):
 	if (que == 'query') or (que == 'queryArduino'):
@@ -11,6 +12,8 @@ def QueryWrite(que, com):
 			qwe = """INSERT INTO %s(time, command, status) VALUES('%s', '%s', '%d');""" %(que, TC.TimeDate(), com, 1)
 			dbsess.execute(qwe)
 			conn.commit()
+			if D > 0:
+				print("QueryWrite" + str(que) + str(com))
 		except sqlite3.Error as e:
 			if conn:
 				conn.rollback()
@@ -31,6 +34,8 @@ def QueryDelete(que, com):
 			qwe = """DELETE FROM %s WHERE (command = '%s');""" %(que, com)
 			dbsess.execute(qwe)
 			conn.commit()
+			if D > 0:
+				print("QueryDelete" + str(que) + str(com))
 		except sqlite3.Error as e:
 			if conn:
 				conn.rollback()
@@ -50,6 +55,8 @@ def QueryStatusChange(que, com, st):
 			dbsess = conn.cursor()
 			dbsess.execute("""UPDATE %s SET status = '%d' WHERE (command = '%s');""" %(que, st, com))
 			conn.commit()
+			if D > 0:
+				print("QueryStatusChange" + str(que) + str(com) + str(st))
 		except sqlite3.Error as e:
 			if conn:
 				conn.rollback()
@@ -69,6 +76,8 @@ def QueryStatusCheck(que, com):
 			dbsess = conn.cursor()
 			st = next(dbsess.execute("""SELECT status FROM %s WHERE (command = '%s');""" %(que, com)))[0]
 			conn.commit()
+			if D > 0:
+				print("QueryStatusCheck" + str(que) + str(com))
 			return st
 		except sqlite3.Error as e:
 			if conn:
@@ -95,6 +104,8 @@ def QueryToLog(que, com):
 			#qwe3="""INSERT INTO log (time, log) VALUES('%s', "GROUP_CONCAT( SELECT (time, command, status) FROM query WHERE command = '%s')")""" %( TC.TimeDate(), com)
 			dbsess.execute(qwe)
 			conn.commit()
+			if D > 0:
+				print("QueryToLog" + str(que) + str(com))
 		except sqlite3.Error as e:
 			if conn:
 				conn.rollback()
@@ -117,6 +128,8 @@ def QueryFill():
 		QueryWrite("Drop on libra")
 		QueryWrite("Drop on field")
 		conn.commit()
+		if D > 0:
+			print("QueryFill")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -135,6 +148,8 @@ def DoneCheck(que, com):
 				return 1
 			else:
 				return 0
+			if D > 0:
+				print("DoneCheck" + str(que) + str(com))
 			conn.commit()
 		except sqlite3.Error as e:
 			if conn:
@@ -155,6 +170,8 @@ def QueryMinId(que):
 			dbsess = conn.cursor()
 			st = next(dbsess.execute("""SELECT command FROM %s WHERE (id = (SELECT MIN(id) FROM query));"""%(que)))[0]
 			conn.commit()
+			if D > 0:
+				print("QueryMinId" + str(que))
 			return st
 		except sqlite3.Error as e:
 			if conn:
