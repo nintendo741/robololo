@@ -21,7 +21,7 @@ void loop() {
 		func();
 		break;
 	case ('X'):
-		finc2();
+		func2();
 		break;
 	default:
 		Serial.println(x);

@@ -3,6 +3,7 @@
 from Utils import QueryUtils as QU
 from Utils import DBConnector as DB
 import time
+import  config as CF
 MovingArduinoPath = 0
 #опрос железа
 #порты TTY, где Ардуино
@@ -12,6 +13,7 @@ while(True):
 	Action = QU.QueryMinId('queryArduino')
 	if (QU.QueryStatusCheck('queryArduino', Action) == 1):
 		QU.QueryStatusChange('queryArduino', Action, 2)
+		StartPhase(Action)
 	elif(QU.QueryStatusCheck('queryArduino', Action) == 3):
 		QU.QueryToLog('queryArduino', Action)
 		QU.QueryDelete('queryArduino', Action)
