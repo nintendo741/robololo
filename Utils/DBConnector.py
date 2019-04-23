@@ -11,7 +11,7 @@ from Tests import CheckDevices as CD
 import config as CF
 TimeGame = 100
 D = CF.Debug
-#sys.exit()
+
 def TablesCreate():
 	try:
 		conn = sqlite3.connect('database1.db')
@@ -48,9 +48,53 @@ def TablesCreate():
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
 		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
 		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
+		dbsess.execute("""CREATE TABLE IF NOT EXISTS json
+                (id INTEGER PRIMARY KEY NOT NULL,
+                frameid integer NOT NULL,
+                type float NOT NULL,
+                score float NOT NULL,
+                ymin float NOT NULL,
+                ymax float NOT NULL,
+                xmin float NOT NULL,
+                xmax float NOT NULL);""")
+		dbsess.execute("""CREATE TABLE IF NOT EXISTS sensors
+                (id INTEGER PRIMARY KEY NOT NULL,
+                data text NOT NULL);""")
 		conn.commit()
 		if D > 0:
 			print("TableCreate")
+	except sqlite3.Error as e:
+		if conn:
+			conn.rollback()
+		print ("Error %s:" % e.args[0])
+		sys.exit(1)
+	finally:
+		if conn:
+			conn.close()
+
+def JsonWrite(frameid, type, score, ymin, ymax, xmin, xmax):
+	try:
+		conn = sqlite3.connect('database1.db')
+		dbsess = conn.cursor()
+		dbsess.execute("""INSERT INTO json
+			VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s');""" %(frameid, type, score, ymin, ymax, xmin, xmax))
+		conn.commit()
+	except sqlite3.Error as e:
+		if conn:
+			conn.rollback()
+		print("Error %s:" % e.args[0])
+		sys.exit(1)
+	finally:
+		if conn:
+			conn.close()
+
+def SensorsWrite(text):
+	try:
+		conn = sqlite3.connect('database1.db')
+		dbsess = conn.cursor()
+		dbsess.execute("""INSERT INTO sensors
+		VALUES('%s');""" %(text))
+		conn.commit()
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -70,6 +114,8 @@ def Finish():
 		dbsess.execute("""DROP TABLE log;""")
 		dbsess.execute("""DROP TABLE startTime;""")
 		dbsess.execute("""DROP TABLE devices;""")
+		dbsess.execute("""DROP TABLE json;""")
+		dbsess.execute("""DROP TABLE sensors;""")
 		conn.commit()
 		if D > 0:
 			print("Finish")

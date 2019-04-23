@@ -5,7 +5,8 @@ void func() {
 }
 void func2() {
 	randomSeed(analogRead(A0));
-	int x =(random(100, 400);
+	delay(random(100, 400));
+	int x = random(100, 400);
 	Serial.println(x);
 }
 void setup() {
