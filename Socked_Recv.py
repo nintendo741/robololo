@@ -5,8 +5,8 @@ def PrepareData (data,FrameId):
     for i in range(len(data[0])):
         for j in range(6):
             print(data[j][i],end=" ")
-        DB.JsonWrite(FrameId,data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5])
-
+        DB.JsonWrite(FrameId,data[0][i],data[1][i],data[2][i],data[3][i],data[4][i],data[5][i])
+DB.DBConnect() #убрать потом это говно
 FrameId=0
 sock = socket.socket()
 sock.bind(('', 9090))
