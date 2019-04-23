@@ -3,6 +3,7 @@ import sys
 #import Utils.TimeChecker as TC
 from Utils import TimeChecker as TC
 from config import Debug as D
+from config import Actions
 
 def QueryWrite(que, com):
 	if (que == 'query') or (que == 'queryArduino'):
@@ -122,11 +123,13 @@ def QueryFill():
 	try:
 		conn = sqlite3.connect('database1.db')
 		dbsess = conn.cursor()
-		QueryWrite("Start moving")
-		QueryWrite("Activate experiment")
-		QueryWrite("Atom collect")
-		QueryWrite("Drop on libra")
-		QueryWrite("Drop on field")
+		for i in range(len(Actions)):
+			QueryWrite(Actions[i])
+		#QueryWrite("Start moving")
+		#QueryWrite("Activate experiment")
+		#QueryWrite("Atom collect")
+		#QueryWrite("Drop on libra")
+		#QueryWrite("Drop on field")
 		conn.commit()
 		if D > 0:
 			print("QueryFill")
@@ -143,14 +146,14 @@ def DoneCheck(que, com):
 	if (que == 'query') or (que == 'queryArduino'):
 		try:
 			conn = sqlite3.connect('database1.db')
-			dbsess = conn.cursor()
+			#dbsess = conn.cursor()
+			if D > 0:
+				print("DoneCheck" + str(que) + str(com))
 			if (QueryStatusCheck(que, com) == 3):
 				return 1
 			else:
 				return 0
-			if D > 0:
-				print("DoneCheck" + str(que) + str(com))
-			conn.commit()
+			#conn.commit()
 		except sqlite3.Error as e:
 			if conn:
 				conn.rollback()

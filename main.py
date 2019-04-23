@@ -31,9 +31,10 @@ D = CF.Debug
 #     print(t)
 #   finally:
 #     F.close()
-
-Actions = ["Start moving", "Activate experiment", "Atom collect", "Drop on libra", "Drop on field"]
-ActionsTime = [CF.TimeStartMov, CF.TimeActivateExperiment, CF.TimeCollectAtoms, CF.TimeDropOnLibra, CF.TimeDropOnFields]
+Actions = CF.Actions
+ActionsTime = CF.ActionsTime
+#Actions = ["Start moving", "Activate experiment", "Atom collect", "Drop on libra", "Drop on field"]
+#ActionsTime = [CF.TimeStartMov, CF.TimeActivateExperiment, CF.TimeCollectAtoms, CF.TimeDropOnLibra, CF.TimeDropOnFields]
 #===============================================================================
 DB.DBConnect()
 StartTime = float(DB.TimeCheck())
