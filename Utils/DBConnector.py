@@ -76,7 +76,7 @@ def JsonWrite(frameid, type, score, ymin, ymax, xmin, xmax):
 	try:
 		conn = sqlite3.connect('database1.db')
 		dbsess = conn.cursor()
-		dbsess.execute("""INSERT INTO json
+		dbsess.execute("""INSERT INTO json(frameid, type, score, ymin, ymax, xmin, xmax)
 			VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s');""" %(frameid, type, score, ymin, ymax, xmin, xmax))
 		conn.commit()
 	except sqlite3.Error as e:
