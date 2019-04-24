@@ -7,7 +7,7 @@ import time
 
 try: #запуск последовательных портов на ардуинки и запись объектов в словарь
     Serials = dict()
-    for i in len(range(CF.Devices)):
+    for i in range(len(CF.Devices)):
         #print(DB.DevicePath("MovingArduino"))
         Serials[CF.Devices[i][0]] = serial.Serial(DB.DevicePath(CF.Devices[i][0]), 9600, timeout=None)
         time.sleep(2)
