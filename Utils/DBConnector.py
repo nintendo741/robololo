@@ -41,7 +41,7 @@ def TablesCreate():
                 device text NOT NULL,
                 path text NOT NULL);""")
 
-		for i in len(CF.Devices):
+		for i in len(range(CF.Devices)):
 			dbsess.execute("""INSERT INTO devices (device, path)
 					VALUES('%s', '%s');"""%(CF.Devices[i][0], CD.DevicePath(CF.Devices[i][1])))
 			#dbsess.execute("""INSERT INTO devices (device, path)
