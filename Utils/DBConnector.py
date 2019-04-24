@@ -40,14 +40,17 @@ def TablesCreate():
                 (id INTEGER PRIMARY KEY NOT NULL,
                 device text NOT NULL,
                 path text NOT NULL);""")
-		dbsess.execute("""INSERT INTO devices (device, path)
-                VALUES('MovingArduino', '%s');"""%(CD.DevicePath(CF.MovingArduinoId)))
-		dbsess.execute("""INSERT INTO devices (device, path)
-                VALUES('SortedArduino', '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
-		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'MovingArduino')"""))[0]
-		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
-		sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
-		dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
+
+		for i in len(CF.Devices):
+			dbsess.execute("""INSERT INTO devices (device, path)
+					VALUES('%s', '%s');"""%(CF.Devices[i][0], CD.DevicePath(CF.Devices[i][1])))
+			#dbsess.execute("""INSERT INTO devices (device, path)
+			#		VALUES('SortedArduino', '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
+			sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = '%s')"""%(CF.Devices[i][0])))[0]
+			dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
+			#sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
+			#dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
+
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS json
                 (id INTEGER PRIMARY KEY NOT NULL,
                 frameid integer NOT NULL,
