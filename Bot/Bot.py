@@ -9,8 +9,9 @@ MovingArduinoPath = 0
 #порты TTY, где Ардуино
 #ACM на все порты
 
-
-
+ArduinoComands = ['F 600 100', 'L 200 100', 'TL 100 100', 'L 600 100', 'TL 100 100', 'R 200 100', 'TR 200 100']
+for i in ArduinoComands:
+	QU.QueryWrite('queryArduino', i)
 
 def ChekStatus ():
 	Action = QU.QueryMinId('queryArduino')
