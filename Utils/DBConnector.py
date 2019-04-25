@@ -5,8 +5,6 @@ from Utils import LogUtils as LU
 from Utils import TimeChecker as TC
 from Tests import CheckDevices as CD
 import config as CF
-TimeGame = 100
-D = CF.Debug
 
 def TablesCreate():
 	try:
@@ -52,7 +50,7 @@ def TablesCreate():
 				(id INTEGER PRIMARY KEY NOT NULL,
 				data text NOT NULL);""")
 		conn.commit()
-		if D > 0:
+		if CF.Debug > 0:
 			print("TableCreate")
 	except sqlite3.Error as e:
 		if conn:
@@ -70,6 +68,8 @@ def JsonWrite(frameid, type, score, ymin, ymax, xmin, xmax):
 		dbsess.execute("""INSERT INTO json(frameid, type, score, ymin, ymax, xmin, xmax)
 			VALUES('%s', '%s', '%s', '%s', '%s', '%s', '%s');""" %(frameid, type, score, ymin, ymax, xmin, xmax))
 		conn.commit()
+		if CF.Debug > 0:
+			print("Json write")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -86,6 +86,8 @@ def SensorsWrite(text):
 		dbsess.execute("""INSERT INTO sensors
 		VALUES('%s');""" %(text))
 		conn.commit()
+		if CF.Debug > 0:
+			print("Sensor write")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -108,8 +110,8 @@ def Finish():
 		dbsess.execute("""DROP TABLE json;""")
 		dbsess.execute("""DROP TABLE sensors;""")
 		conn.commit()
-		if D > 0:
-			print("Finish")
+		if CF.Debug > 0:
+			print("Finish DB")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
@@ -125,7 +127,7 @@ def DBConnect():
 		dbsess = conn.cursor()
 		TablesCreate()
 		conn.commit()
-		if D > 0:
+		if CF.Debug > 0:
 			print("DBConnect")
 	except sqlite3.Error as e:
 		if conn:
@@ -143,7 +145,7 @@ def TimeCheck():
 		st = next(dbsess.execute("""SELECT time FROM startTime;"""))[0]
 		#t = TC.Time() - st
 		conn.commit()
-		if D > 0:
+		if CF.Debug > 0:
 			print("TimeCheck:" + str(st))
 		return st
 	except sqlite3.Error as e:
@@ -161,7 +163,7 @@ def DevicePath(device):
 		dbsess = conn.cursor()
 		st = next(dbsess.execute("""SELECT path FROM devices WHERE(device = '%s');"""%(device)))[0]
 		conn.commit()
-		if D > 0:
+		if CF.Debug > 0:
 			print("DevicePath" + str(device) + str(st))
 		return st
 	except sqlite3.Error as e:
@@ -173,11 +175,23 @@ def DevicePath(device):
 		if conn:
 			conn.close()
 
-#QU.QueryWrite("test text")
-#LU.LogWrite("test log text 1")
-#QU.QueryToLog("test text")
-#QU.QueryStatusChange("test text", 3)
-#print(QU.QueryStatusCheck("test text"))
-#LU.LogWrite("test log text 2")
-#QU.QueryToLog("test text")
-#QU.QueryDelete("test text", 3)
+def GetCoordinates(Frame, Object):
+	try:
+		conn = sqlite3.connect('database1.db')
+		dbsess = conn.cursor()
+		xmin = next(dbsess.execute("""SELECT xmin FROM json WHERE((frameid = '%s') AND (type = '%s'));"""%(Frame, Object)))[0]
+		xmax = next(dbsess.execute("""SELECT xmax FROM json WHERE((frameid = '%s') AND (type = '%s'));"""%(Frame, Object)))[0]
+		ymin = next(dbsess.execute("""SELECT ymin FROM json WHERE((frameid = '%s') AND (type = '%s'));"""%(Frame, Object)))[0]
+		ymax = next(dbsess.execute("""SELECT ymax FROM json WHERE((frameid = '%s') AND (type = '%s'));"""%(Frame, Object)))[0]
+		conn.commit()
+		if CF.Debug > 0:
+			print("Get coordinates: ", xmin, ymin, xmax, ymax)
+		return xmin, ymin, xmax, ymax
+	except sqlite3.Error as e:
+		if conn:
+			conn.rollback()
+		print("Error %s:" % e.args[0])
+		sys.exit(1)
+	finally:
+		if conn:
+			conn.close()

@@ -127,76 +127,82 @@ def BackRightMoving(Speed, Turn):
 
 def ChekMoving (Comand):
 	Comand = Comand.split()
-	Comand[1] =int(Comand[1])
+	Comand[1] = int(Comand[1])
 	Comand[2] = int(Comand[2])
-	if Comand[0]== CF.ArduinoComands[0]:
+	if Comand[0] == CF.ArduinoComands[0]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			ForwardMoving(Comand[2],CF.Step)
+			ForwardMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[1]:
+		ForwardMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[1]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			BackMoving(Comand[2],CF.Step)
+			BackMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		BackMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[2]:
+		BackMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[2]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			RightMoving(Comand[2],CF.Step)
+			RightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		RightMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[3]:
+		RightMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[3]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			LeftMoving(Comand[2],CF.Step)
+			LeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		LeftMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[4]:
+		LeftMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[4]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			TurnRightMoving(Comand[2],CF.Step)
+			TurnRightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		TurnRightMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[5]:
+		TurnRightMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[5]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			TurnLeftMoving(Comand[2],CF.Step)
+			TurnLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		TurnLeftMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[6]:
+		TurnLeftMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[6]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			ForwardRightMoving(Comand[2],CF.Step)
+			ForwardRightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardRightMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[7]:
+		ForwardRightMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[7]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			ForwardLeftMoving(Comand[2],CF.Step)
+			ForwardLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardLeftMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[8]:
+		ForwardLeftMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[8]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			BackRightMoving(Comand[2],CF.Step)
 		ReadyMotors(Comand[2])
-		BackRightMoving(Comand[2],Comand[1]%CF.Step)
-	elif Comand[0]== CF.ArduinoComands[9]:
+		BackRightMoving(Comand[2], Comand[1]%CF.Step)
+	elif Comand[0] == CF.ArduinoComands[9]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
-			BackLeftMoving(Comand[2],CF.Step)
+			BackLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		BackLeftMoving(Comand[2],Comand[1]%CF.Step)
+		BackLeftMoving(Comand[2], Comand[1]%CF.Step)
+	if CF.Debug < 0:
+		print("Make", Comand)
 
 def ReadyMotors(Speed):
 	StartTime = time.time()
-	Delay=CF.Step/50
+	Delay = CF.Step/50
 	if Delay > 0.05:
-		Delay=0.05
+		Delay = 0.05
 	while not AC.ChekMotors():
 		time.sleep(Delay)#todo Checksensors, check AI.
-		if (time.time()-StartTime)>(CF.Step*3/Speed):
+		if (time.time()-StartTime) > (CF.Step*3/Speed):
 			AC.ArdReset()
+			if CF.Debug > 0:
+				print("Time end!")
 			break
+		if CF.Debug > 0:
+			print("CheckMotors")
