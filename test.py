@@ -5,7 +5,7 @@ from Bot.Integrations import MovingPlantform as MP
 from Bot.Integrations import SendingComand as SC
 #import Tests.CheckDevices as CD
 #import time
-#import config as CF
+import config as CF
 
 if sys.platform[:3] == 'win':
 	import msvcrt
@@ -15,7 +15,6 @@ if sys.platform[:3] == 'win':
 elif sys.platform[:3] == 'lin':
 	import termios, sys, os
 	TERMIOS = termios
-
 	def getkey():
 		fd = sys.stdin.fileno()
 		old = termios.tcgetattr(fd)
@@ -35,7 +34,7 @@ try:
 	Speed=int(input('enter speed'))
 	Turn=int(input('enter turn(1/1000)'))
 	while True:
-		print(SC.ReadComand('Moving'))
+		print(SC.ReadComand(CF.Devices[0][0]))
 		pressedKey = getkey().decode("utf-8")
 		if pressedKey == 'y':
 			sys.exit()

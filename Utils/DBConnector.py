@@ -1,12 +1,8 @@
 import sqlite3
 import sys
-#import Utils.QueryUtils as QU
 from Utils import QueryUtils as QU
-#import Utils.LogUtils as LU
 from Utils import LogUtils as LU
-#import Utils.TimeChecker as TC
 from Utils import TimeChecker as TC
-#import Tests.CheckDevices as CD
 from Tests import CheckDevices as CD
 import config as CF
 TimeGame = 100
@@ -17,59 +13,51 @@ def TablesCreate():
 		conn = sqlite3.connect('database1.db')
 		dbsess = conn.cursor()
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS query 
-                (id INTEGER PRIMARY KEY NOT NULL, 
-                time text NOT NULL, 
-                command text NOT NULL, 
-                status integer NOT NULL);""")
-		#1 - wait, 2 - in progress, 3 - sucseful, 0 - error
+				(id INTEGER PRIMARY KEY NOT NULL, 
+				time text NOT NULL, 
+				command text NOT NULL, 
+				status integer NOT NULL);""")  #1 - wait, 2 - in progress, 3 - sucseful, 0 - error
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS queryArduino 
-                (id INTEGER PRIMARY KEY NOT NULL, 
-                time text NOT NULL, 
-                command text NOT NULL, 
-                status integer NOT NULL);""")
-		#1 - wait, 2 - in progress, 3 - sucseful, 0 - error
+				(id INTEGER PRIMARY KEY NOT NULL, 
+				time text NOT NULL, 
+				command text NOT NULL, 
+				status integer NOT NULL);""")  #1 - wait, 2 - in progress, 3 - sucseful, 0 - error
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS log 
-                (id INTEGER PRIMARY KEY NOT NULL, 
-                time text NOT NULL, 
-                log text NOT NULL);""")
+				(id INTEGER PRIMARY KEY NOT NULL, 
+				time text NOT NULL, 
+				log text NOT NULL);""")
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS startTime
-                (time text NOT NULL);""")
+				(time text NOT NULL);""")
 		dbsess.execute("""INSERT INTO startTime
-                VALUES('%s');"""%(TC.Time()))
+				VALUES('%s');"""%(TC.Time()))		# todo сделать после ожидания начала движения
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS devices
-                (id INTEGER PRIMARY KEY NOT NULL,
-                device text NOT NULL,
-                path text NOT NULL);""")
-
+				(id INTEGER PRIMARY KEY NOT NULL,
+				device text NOT NULL,
+				path text NOT NULL);""")
 		for i in range(len(CF.Devices)):
 			dbsess.execute("""INSERT INTO devices (device, path)
 					VALUES('%s', '%s');"""%(CF.Devices[i][0], CD.DevicePath(CF.Devices[i][1])))
-			#dbsess.execute("""INSERT INTO devices (device, path)
-			#		VALUES('SortedArduino', '%s');"""%(CD.DevicePath(CF.SortedArduinoId)))
 			sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = '%s')"""%(CF.Devices[i][0])))[0]
 			dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
-			#sel = next(dbsess.execute("""SELECT device || ' ' || path FROM devices WHERE (device = 'SortedArduino')"""))[0]
-			#dbsess.execute("""INSERT INTO log (time, log) VALUES('%s', '%s');""" %(TC.TimeDate(), sel))
-
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS json
-                (id INTEGER PRIMARY KEY NOT NULL,
-                frameid integer NOT NULL,
-                type float NOT NULL,
-                score float NOT NULL,
-                ymin float NOT NULL,
-                ymax float NOT NULL,
-                xmin float NOT NULL,
-                xmax float NOT NULL);""")
+				(id INTEGER PRIMARY KEY NOT NULL,
+				frameid integer NOT NULL,
+				type float NOT NULL,
+				score float NOT NULL,
+				ymin float NOT NULL,
+				ymax float NOT NULL,
+				xmin float NOT NULL,
+				xmax float NOT NULL);""")
 		dbsess.execute("""CREATE TABLE IF NOT EXISTS sensors
-                (id INTEGER PRIMARY KEY NOT NULL,
-                data text NOT NULL);""")
+				(id INTEGER PRIMARY KEY NOT NULL,
+				data text NOT NULL);""")
 		conn.commit()
 		if D > 0:
 			print("TableCreate")
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
-		print ("Error %s:" % e.args[0])
+		print("Error %s:" % e.args[0])
 		sys.exit(1)
 	finally:
 		if conn:
@@ -101,7 +89,7 @@ def SensorsWrite(text):
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
-		print ("Error %s:" % e.args[0])
+		print("Error %s:" % e.args[0])
 		sys.exit(1)
 	finally:
 		if conn:
@@ -125,7 +113,7 @@ def Finish():
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
-		print ("Error %s:" % e.args[0])
+		print("Error %s:" % e.args[0])
 		sys.exit(1)
 	finally:
 		if conn:
@@ -142,7 +130,7 @@ def DBConnect():
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
-		print ("Error %s:" % e.args[0])
+		print("Error %s:" % e.args[0])
 		sys.exit(1)
 	finally:
 		if conn:
@@ -161,7 +149,7 @@ def TimeCheck():
 	except sqlite3.Error as e:
 		if conn:
 			conn.rollback()
-		print ("Error %s:" % e.args[0])
+		print("Error %s:" % e.args[0])
 		sys.exit(1)
 	finally:
 		if conn:

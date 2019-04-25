@@ -18,13 +18,13 @@ def BuildMovingComand(Speed, Turn, Direction):
 	Speed = str(Speed)
 	Turn = str(Turn)
 	if '2' in Direction:
-		return BuildMovingComand_2(Speed, Turn, Direction) #вызов функции которая проверяет третье направление дввижение которое означает что скорость этих двигателей нужно выкртить в 0
+		return BuildMovingComand_2(Speed, Turn, Direction)  #вызов функции которая проверяет третье направление дввижение которое означает что скорость этих двигателей нужно выкртить в 0
 	comand = 'M'
 	for i in Direction:
 		comand += '|' + i
-	for i in range (4):
+	for i in range(4):
 		comand += '|' + Speed
-	for i in range (4):
+	for i in range(4):
 		comand += '|' + Turn
 	comand += '@'
 	if CF.Debug > 0:
