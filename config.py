@@ -10,3 +10,4 @@ Debug = 0
 Step = 10
 Devices = [['MovingArduino', 'usb-1a86_USB2.0-Serial']]#,['SortedArduino', '756303134363511072A0']]
 ArduinoComands = ['F', 'B', 'R', 'L', 'TR', 'TL', 'FR', 'FL', 'BR', 'BL']
+GPIOPins = [5,6,13,19,26]

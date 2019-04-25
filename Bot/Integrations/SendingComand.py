@@ -23,7 +23,7 @@ except Exception as err:
 def ReadComand(Ard):
     data = None
     starttime = time.time()
-    while data == None and (time.time() - starttime) < 1:
+    while data == None and (time.time() - starttime) < 0.2:
         while Serials[Ard].inWaiting():
             data = Serials[Ard].readline()
 
