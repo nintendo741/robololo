@@ -58,70 +58,70 @@ def BuildMovingComand_2(Speed, Turn, Direction):
 def ForwardMoving(Speed, Turn):  #принимаем скорость и обороты колеса
 	Direction = ['1', '1', '1', '1']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def BackMoving(Speed, Turn):
 	Direction = ['0', '0', '0', '0']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def LeftMoving(Speed, Turn):
 	Direction = ['0', '1', '1', '0']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def RightMoving(Speed, Turn):
 	Direction = ['1', '0', '0', '1']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def TurnLeftMoving(Speed, Turn):
 	Direction = ['0', '1', '0', '1']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def TurnRightMoving(Speed, Turn):
 	Direction = ['1', '0', '1', '0']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def ForwardLeftMoving(Speed, Turn):
 	Direction = ['2', '1', '1', '2']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def ForwardRightMoving(Speed, Turn):
 	Direction = ['1', '2', '2', '1']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def BackLeftMoving(Speed, Turn):
 	Direction = ['0', '2', '2', '0']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
 def BackRightMoving(Speed, Turn):
 	Direction = ['2', '0', '0', '2']
 	comand = BuildMovingComand(Speed, Turn, Direction)
-	SC.SendComand(comand.encode(), MovingArduino)
+	SC.SendComand(comand, MovingArduino)
 	if CF.Debug > 0:
 		print(comand)
 
@@ -134,7 +134,8 @@ def ChekMoving (Comand):
 			ReadyMotors(Comand[2])
 			ForwardMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			ForwardMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[1]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
@@ -146,49 +147,57 @@ def ChekMoving (Comand):
 			ReadyMotors(Comand[2])
 			RightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		RightMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			RightMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[3]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			LeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		LeftMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			LeftMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[4]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			TurnRightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		TurnRightMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			TurnRightMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[5]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			TurnLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		TurnLeftMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			TurnLeftMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[6]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			ForwardRightMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardRightMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			ForwardRightMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[7]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			ForwardLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		ForwardLeftMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			ForwardLeftMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[8]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			BackRightMoving(Comand[2],CF.Step)
 		ReadyMotors(Comand[2])
-		BackRightMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			BackRightMoving(Comand[2], Comand[1]%CF.Step)
 	elif Comand[0] == CF.ArduinoComands[9]:
 		for i in range(Comand[1]//CF.Step):
 			ReadyMotors(Comand[2])
 			BackLeftMoving(Comand[2], CF.Step)
 		ReadyMotors(Comand[2])
-		BackLeftMoving(Comand[2], Comand[1]%CF.Step)
+		if (Comand[1]%CF.Step >0):
+			BackLeftMoving(Comand[2], Comand[1]%CF.Step)
 	if CF.Debug < 0:
 		print("Make", Comand)
 
@@ -197,7 +206,7 @@ def ReadyMotors(Speed):
 	Delay = CF.Step/50
 	if Delay > 0.05:
 		Delay = 0.05
-	while not AC.ChekMotors():
+	while  AC.ChekMotors()>0:
 		time.sleep(Delay)#todo Checksensors, check AI.
 		if (time.time()-StartTime) > (CF.Step*3/Speed):
 			AC.ArdReset()
