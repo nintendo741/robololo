@@ -9,6 +9,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 GPIO.cleanup()
 GPIO.setup(CF.GPIOPins[0], GPIO.OUT)#объявление пинов заданных из конфига
+GPIO.output(CF.GPIOPins[0], True)
 GPIO.setup(CF.GPIOPins[1], GPIO.IN)
 GPIO.setup(CF.GPIOPins[2], GPIO.IN)
 GPIO.setup(CF.GPIOPins[3], GPIO.IN)
@@ -20,9 +21,9 @@ def ArdReset():
 	if CF.Debug>0:
 		print("send reset signal to arduino")
 	SC.DropPort(CF.Devices[0][0])
-	GPIO.output(CF.GPIOPins[0], True)
-	time.sleep(0.1)
 	GPIO.output(CF.GPIOPins[0], False)
+	time.sleep(0.1)
+	GPIO.output(CF.GPIOPins[0], True)
 	time.sleep(1.5)
 	SC.InitPort()
 
@@ -30,10 +31,14 @@ def ArdReset():
 	while response != "Ready":
 		if CF.Debug>0:
 			print("waiting Arduino boot")
-
-		response=SC.ReadComand(CF.Devices[0][0])
+		SC.DropPort(CF.Devices[0][0])
+		SC.InitPort()
+		time.sleep(2)
+		response = SC.ReadComand(CF.Devices[0][0])
+		if (response != None):
+			response = response[:-4]
+		SC.SendComand("p", CF.Devices[0][0])
 		print(response)
-	time.sleep(2)
 	if CF.Debug>0:
 		print("reset complete")
 def GPIODown():

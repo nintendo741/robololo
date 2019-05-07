@@ -26,9 +26,9 @@ def ChekStatus ():
 	if (False):
 		QU.QueryStatusChange('queryArduino', Action, 3)
 
-while (True):
-	for i in ArduinoComands:
-		MP.ChekMoving(i)
+#while (True):
+for i in ArduinoComands:
+	MP.ChekMoving(i)
 
 DB.Finish()
 AC.GPIODown()

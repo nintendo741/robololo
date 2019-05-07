@@ -35,6 +35,7 @@ def ReadComand(Ard):
     while data == None and (time.time() - starttime) < 0.2:
         while Serials[Ard].inWaiting():
             data = Serials[Ard].readline()
+            data = data.decode()
 
     return data
 def SendComand(Comand, Ard):
@@ -42,7 +43,7 @@ def SendComand(Comand, Ard):
     Serials[Ard].write(Comand)
     if CF.Debug > 0:
         print("comand send=",Comand)
-        print('wait 1 second')
-        time.sleep(1)
+        #print('wait 1 second')
+        #time.sleep(1)
 
     #subprocess.check_output('echo '+Comand+' > '+PathToDevice, shell=True)

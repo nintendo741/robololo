@@ -204,11 +204,12 @@ def ChekMoving (Comand):
 def ReadyMotors(Speed):
 	StartTime = time.time()
 	Delay = CF.Step/50
-	if Delay > 0.05:
+	if Delay < 0.05:
 		Delay = 0.05
+	time.sleep(0.1) #todo убрать?
 	while  AC.ChekMotors()>0:
 		time.sleep(Delay)#todo Checksensors, check AI.
-		if (time.time()-StartTime) > (CF.Step*3/Speed):
+		if (time.time()-StartTime) > (CF.Step*5/Speed):
 			AC.ArdReset()
 			if CF.Debug > 0:
 				print("Time end!")
